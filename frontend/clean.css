@@ -1,0 +1,901 @@
+/* ==========================================================================
+   1. CSS Variables
+   ========================================================================== */
+:root {
+    /* Colors */
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-grey: rgb(143, 143, 143);
+    --color-primary: #2c8dfb;
+    --color-background: #eee;
+    --color-border: rgba(0, 0, 0, 0.1);
+
+    /* Layout */
+    --base-font-size: 14px;
+    --menu-min-width: 100px;
+    --menu-width: 80%;
+    --bar-width: 1.785em;
+    --bar-height: 0.178em;
+    --bar-margin: 0.357em;
+    --menu-padding: 0.75em;
+    
+    /* Effects */
+    --box-shadow-bottom: 0 2px 3px rgba(0, 0, 0, 0.034);
+    --box-shadow-top: 0 -2px 3px rgba(0, 0, 0, 0.034);
+
+    /* Icons */
+    --icon-reload: url('data:image/svg+xml,<svg fill="%23000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19.146 4.854l-1.489 1.489A8 8 0 1 0 12 20a8.094 8.094 0 0 0 7.371-4.886 1 1 0 1 0-1.842-.779A6.071 6.071 0 0 1 12 18a6 6 0 1 1 4.243-10.243l-1.39 1.39a.5.5 0 0 0 .354.854H19.5A.5.5 0 0 0 20 9.5V5.207a.5.5 0 0 0-.854-.353z"/></svg>');
+    --icon-add: url('data:image/svg+xml,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 12L12 12M12 12L17 12M12 12V7M12 12L12 17" stroke="%23000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    --icon-emoji: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>');
+    --icon-send: url('data:image/svg+xml,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.99811 10.2467L7.43298 11.0077C7.70983 11.4922 7.84825 11.7344 7.84825 12C7.84825 12.2656 7.70983 12.5078 7.43299 12.9923L7.43298 12.9923L6.99811 13.7533C5.75981 15.9203 5.14066 17.0039 5.62348 17.5412C6.1063 18.0785 7.24961 17.5783 9.53623 16.5779L15.8119 13.8323C17.6074 13.0468 18.5051 12.654 18.5051 12C18.5051 11.346 17.6074 10.9532 15.8119 10.1677L9.53624 7.4221C7.24962 6.42171 6.1063 5.92151 5.62348 6.45883C5.14066 6.99615 5.75981 8.07966 6.99811 10.2467Z" fill="%23222222"/></svg>');
+    --icon-cancel: url('data:image/svg+xml,<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z" fill="%23000000"/></svg>');
+    --icon-menu: url('data:image/svg+xml,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 17H13M5 12H19M11 7H19" stroke="%23000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+
+  }
+
+/* ==========================================================================
+   2. Base Styles
+   ========================================================================== */
+html, body {
+    position: static;
+    width: 100%;
+    height: 100vh;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    overscroll-behavior: none;
+    touch-action: none;
+}
+
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: var(--base-font-size);
+    color: var(--color-black);
+    background-color: rgb(255, 255, 255);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ==========================================================================
+   3. Layout Components
+   ========================================================================== */
+.chat-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+}
+
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    position: relative;
+    padding: 350px 0 5em;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 5em);
+    background-color: rgba(255, 255, 255, 0);
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 0.25em 0.5em 4em;
+}
+
+/* ==========================================================================
+   4. Header Styles
+   ========================================================================== */
+.header {
+    position: sticky;
+    background-color: transparent;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 0;
+    z-index: 1000;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    font-size: 1em;
+    background-color: rgba(131, 131, 131, 0);
+    color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(50px);
+    padding: 0.5em 0.5em;
+    position: fixed;
+    left: 0;
+    right: 0;
+    /* border-radius: 1.2em; */
+    /* border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem; */
+    top: 0;
+    padding-top:  calc(env(safe-area-inset-top) + 0.5em);
+    
+}
+
+.header .title {
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   5. Message Styles
+   ========================================================================== */
+.message-group {
+    position: relative;
+    max-width: 60%;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+}
+
+.message-group.outgoing {
+    align-self: flex-end;
+    align-items: flex-end;
+    padding-right: 0.5em;
+}
+
+.message-group.incoming {
+    padding-left: 3.7em;
+
+}
+
+.message {
+    max-width: 100%;
+    width: fit-content;
+    margin: 0;
+    padding: 0.5em 1em;
+    border-radius: 1.2em;
+    position: relative;
+    z-index: 2;
+}
+
+.message.incoming {
+    background-color: rgba(241, 241, 241, 0.5);
+    backdrop-filter: blur(10px);
+    color: var(--color-black);
+}
+
+.message.outgoing {
+    background-color: rgba(43, 43, 43, 0.5);
+    backdrop-filter: blur(10px);
+
+    color: var(--color-white);
+}
+
+/* Message Content */
+.message-content {
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.sender-name {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-size: 0.85em;
+    color: #cfcfcf;
+    margin-left: 0.5em;
+}
+
+.message-timestamp {
+    position: absolute;
+    font-size: 0.75em;
+    color: var(--color-black);
+    white-space: nowrap;
+    animation: fadeIn 0.2s ease-out;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.message-group.incoming .message .message-timestamp {
+    left: calc(100% + 1.2em);
+}
+
+.message-group.outgoing .message .message-timestamp {
+    right: calc(100% + 1.2em);
+}
+
+.floating-message {
+  position: fixed;
+  pointer-events: none;
+  z-index: 2110;
+}
+
+.reply-preview {
+    position: relative;
+    padding: 0.5em 1em 2.5em 1em;
+    border-radius: 1.2em;
+    margin-bottom: -2em;
+    width: auto;
+    display: inline-block;
+    z-index: 1;
+    background-color: rgba(165, 165, 165, 0.8);
+    backdrop-filter: blur(50px);
+    color: rgb(59, 59, 59);
+    font-size: 0.8em;
+}
+
+/* Add styles for the preview content */
+.reply-preview .preview-content {
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4; /* Limit to 4 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 5.6em; /* Approximately 4 lines (1.4 line-height × 4) */
+    line-height: 1;
+    padding-top: 0.25em;
+    width: auto;
+}
+
+/* Active reply preview */
+
+.active-reply-preview {
+    width: 100%;
+    flex-basis: 100%;
+    background-color: transparent;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: slideIn 0.2s ease-out;
+    order: -1;
+}
+
+.active-reply-preview .replying-to {
+  font-size: 0.8em;
+  color: var(--color-grey);
+  margin-bottom: 2px;
+}
+
+.active-reply-preview .reply-content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-grey);
+}
+
+.active-reply-preview .cancel-reply {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    -webkit-mask-image: var(--icon-cancel);
+    mask-image: var(--icon-cancel);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    background-color: var(--color-black);
+    
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-focus-ring-color: transparent;
+    outline: none;
+}
+
+.active-reply-preview .cancel-reply:hover {
+    opacity: 0.7;
+}
+
+/* Remove these classes as they're no longer needed */
+.preview-message-group,
+.active-reply-preview .message,
+.active-reply-preview .reply-preview {
+  display: none;
+}
+
+/* Message that is emoji only */
+
+/* Add styles for emoji-only messages */
+.message.emoji-only {
+  background: none !important;
+  border: none !important;
+  padding: 0.2em !important;
+}
+
+.message.emoji-only .message-content {
+  font-size: 3em;
+  line-height: 1;
+}
+
+/* Adjust timestamp position for emoji-only messages */
+.message.emoji-only .message-timestamp {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Ensure proper spacing for emoji-only messages */
+.message-group .message.emoji-only {
+  margin: 0.2em 0;
+}
+
+/* Preserve hover/active states for emoji-only messages */
+.message.emoji-only:active {
+  opacity: 0.7;
+}
+
+/* Add reduced padding when the main message is emoji-only */
+.message.emoji-only ~ .reply-preview {
+  padding-bottom: 0em;  /* 50% of the original 2.4em */
+}
+
+/* Add reduced padding when the message-group contains an emoji-only message */
+.message-group:has(.message.emoji-only) .reply-preview {
+  padding-bottom: 0.4em;  /* 50% of the original 2.4em */
+  margin-bottom: -0.2em;
+}
+
+/* ==========================================================================
+   6. Input Area
+   ========================================================================== */
+.input-container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0.5em;
+
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+    z-index: 2000;
+}
+
+.input-container:has(.active-reply-preview) {
+  background-color: rgba(209, 209, 209, 0.5);
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+  color: var(--color-black);
+}
+
+.textarea-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+
+}
+
+.chat-input {
+    width: 100%;
+    background-color: rgba(165, 165, 165, 0.5);;
+    color: var(--color-black);
+    border-radius: 1.2em;
+    padding: 0.5em 1em 0.5em 1em;
+    /* padding-top: 1em; */
+    font-size: 1em;
+    line-height: 1.4;
+    max-height: 100px;
+    resize: none;
+    outline: none;
+    vertical-align: middle;
+    height: auto;
+    border: 0;
+}
+
+.send-button {
+    z-index: 2001;
+}
+
+/* ==========================================================================
+   7. Buttons and Interactive Elements
+   ========================================================================== */
+.reload-button,
+.add-button,
+.emoji-button,
+.send-button,
+.menu-button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.reload-button {
+    -webkit-mask-image: var(--icon-reload);
+    mask-image: var(--icon-reload);
+    background-color: grey;
+    -webkit-mask-size: 90%;
+    mask-size: 90%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+.add-button {
+    -webkit-mask-image: var(--icon-add);
+    mask-image: var(--icon-add);
+    background-color:  grey;
+    -webkit-mask-size: 100%;
+    mask-size: 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    width: 2.5em;
+    height: auto;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.emoji-button {
+    -webkit-mask-image: var(--icon-emoji);
+    mask-image: var(--icon-emoji);
+    background-color: var(--color-black);
+}
+
+.send-button {
+    -webkit-mask-image: var(--icon-send);
+    mask-image: var(--icon-send);
+    background-color:  grey;
+    -webkit-mask-size: 100%;
+    mask-size: 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    width: 3em;
+    height: auto;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.menu-button {
+    -webkit-mask-image: var(--icon-menu);
+    mask-image: var(--icon-menu);
+    background-color:  grey;
+}
+
+/* .tap-prompt.reply-button {
+  position: fixed;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  padding: 0.5em 1.5em;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 1103;
+  animation: fadeIn 0.3s ease-in-out;
+} */
+
+.message:hover .reply-button {
+    opacity: 1;
+}
+
+.send-button,
+.add-button,
+.menu-button {
+  transition: transform 0.2s ease;
+  touch-action: manipulation; /* Optimize for touch */
+  -webkit-tap-highlight-color: transparent; /* Remove default mobile tap highlight */
+}
+
+.send-button:active,
+.add-button:active,
+.menu-button:active {
+  animation: buttonPress 300ms ease-in-out;
+}
+
+/* Disable hover effects on mobile */
+@media (hover: hover) {
+  .send-button:hover,
+  .add-button:hover,
+  .menu-button:hover {
+    opacity: 0.8;
+  }
+}
+
+/* ==========================================================================
+   8. Reactions
+   ========================================================================== */
+.reaction-bar {
+    position: fixed;
+
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 3.5em;
+    display: flex;
+    z-index: 1103;
+    align-items: center;
+    min-height: 3.5em;
+}
+
+.reaction-bar-floating {
+  width: calc(100% - 1em);
+  bottom: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+
+}
+
+.reaction-button {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 2em;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.reaction-button:first-child {
+  margin-left: 0.25em;
+}
+
+.reaction-button:last-child {
+  margin-right: 0.25em;
+}
+
+.reaction-button:hover {
+  transform: scale(1.2);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.reaction-button:active {
+  transform: scale(0.95);
+}
+
+.custom-reaction {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 0em;
+}
+
+.message-reactions {
+    position: absolute;
+    bottom: -1.5em;
+    right: 0.5em;
+    display: flex;
+    gap: 0.3em;
+    z-index: 1;
+}
+
+.reaction-button.custom-reaction {
+  height: 2em;
+  width: 2em;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  -webkit-mask-image: var(--icon-add);
+  mask-image: var(--icon-add); 
+  -webkit-mask-size: 80%;
+  mask-size: 80%;
+  background-color: var(--color-white);
+}
+
+/* ==========================================================================
+   9. Animations
+   ========================================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes buttonPress {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   10. Media Queries
+   ========================================================================== */
+@media (hover: hover) {
+    .send-button:hover,
+    .add-button:hover,
+    .emoji-button:hover,
+    .menu-button:hover {
+        opacity: 0.8;
+    }
+}
+
+/* ==========================================================================
+   11. Overlay Styles
+   ========================================================================== */
+.blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.514);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1100;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.blur-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.blur-overlay.active ~ .swiper {
+    pointer-events: none;
+}
+
+.scroll-button {
+  width: 2em;
+  height: 2em;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 4h2v12l5.5-5.5 1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5 11 16V4z"/></svg>');
+  -webkit-mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 4h2v12l5.5-5.5 1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5 11 16V4z"/></svg>');
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  background-color: var(--color-black);
+}
+
+.message-tools {
+  display: flex;
+  width: 50vw;
+  flex-direction: column;
+  border-radius: 1em;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.message-tool-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  color: var(--color-white);
+  transition: background-color 0.3s ease;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  padding: 1em 1em;
+  cursor: pointer;
+  white-space: nowrap;
+
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.message-tool-button:hover {
+  background-color: transparent;
+}
+
+.message-tool-button:last-child {
+  border-bottom: none;
+}
+
+.tool-icon svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-white);
+}
+
+.tool-text {
+  margin-right: 1em;
+}
+
+.message-tool-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.long-press-container {
+  pointer-events: auto;
+  will-change: transform;
+  z-index: 1102;
+  width: 100%;
+  margin-top: -4px;
+}
+
+.floating-message {
+  pointer-events: none;
+  width: fit-content;
+  align-self: flex-start;
+
+}
+
+.floating-message.outgoing {
+  align-self: flex-end;
+}
+
+
+
+.message-tools-floating {
+  position: absolute;
+  top: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  width: 75vw;
+  /* Inherit existing message-tools styles */
+  flex-direction: column;
+  border-radius: 1em;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Position tools based on message alignment */
+.message-group.outgoing + .message-tools-floating {
+  align-self: end;
+  margin-right: 0.5em;
+}
+
+.message-group.incoming + .message-tools-floating {
+  align-self: start;
+  margin-left: 2em;
+}
+
+.message-group + .message-group[data-sender] {
+  margin-top: 0.15em;
+}
+
+.message-group.outgoing[data-consecutive="true"] + .message-group.outgoing:not([data-consecutive="true"]) .message {
+  margin-top: 2em;
+}
+
+
+
+.background-button {
+  height: 32px;
+  width: 32px;
+  border: none;
+  background-color: grey;
+  background-size: 1.2em;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  mask-image: url('/media/icons/img-1-svgrepo-com.svg');
+  -webkit-mask-image: url('/media/icons/img-1-svgrepo-com.svg');
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-mode: match-source;
+  mask-size: 80%;
+  -webkit-mask-size: 80%;
+}
+
+.background-button:hover {
+  opacity: 1;
+}
+
+.background-select {
+  position: absolute;
+  top: calc(100% + 0.2em); /* Position right below the button */
+  right: 50%; /* Center horizontally */
+
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 1.2em;
+  padding: 0.5em;
+  color: var(--color-white);
+  font-size: 0.9em;
+  cursor: pointer;
+  z-index: 1000;
+  min-width: 150px; /* Ensure minimum width */
+  text-align: center;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.background-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  position: relative;
+}
+
+.background-select option {
+  background: rgba(51, 51, 51, 0.9);
+  color: var(--color-white);
+  padding: 0.5em;
+}
+
+/* Add smooth transition for showing/hiding */
+.background-select {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.background-select:not([hidden]) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.sender-info {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 4px;
+  transform: translateX(-1.72em);
+}
+
+.sender-profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  /* box-shadow: 0 0 15px 1px rgba(70, 70, 70, 0.5); */
+  opacity: 0.6;
+}
+
+
+.profile-pic-container {
+  position: absolute;
+  bottom: 1.1em;
+  left: 0.75em;  /* Adjust based on your layout */
+  width: 30px;  /* Adjust size as needed */
+  height: 30px;
+}
+
+.sender-profile-pic {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+

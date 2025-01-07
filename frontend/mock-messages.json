@@ -1,0 +1,190 @@
+[
+  {
+    "id": "msg_1",
+    "content": "Hey, how are you?",
+    "timestamp": "2024-03-14T10:25:00Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_2",
+    "content": "I'm doing great, thanks!",
+    "timestamp": "2024-03-14T10:30:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen",
+    "replyTo": "msg_1",
+    "replyToContent": "Hey, how are you?"
+  },
+  {
+    "id": "msg_3",
+    "content": "How about you?",
+    "timestamp": "2024-03-14T10:31:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_4",
+    "content": "Pretty good, just finished a workout.",
+    "timestamp": "2024-03-14T10:32:00Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_5",
+    "content": "Nice! What kind of workout?",
+    "timestamp": "2024-03-14T10:33:30Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_6",
+    "content": "Just some cardio and weightlifting.",
+    "timestamp": "2024-03-14T10:34:00Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen",
+    "replyTo": "msg_5",
+    "replyToContent": "Nice! What kind of workout?"
+  },
+  {
+    "id": "msg_7",
+    "content": "You always hit the gym so consistently. I'm impressed! I am also going to the gym at the moment. I really need to get back into it.",
+    "timestamp": "2024-03-14T10:35:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_8",
+    "content": "Haha, thanks! It's my therapy.",
+    "timestamp": "2024-03-14T10:36:00Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_9",
+    "content": "So, what are you up to today?",
+    "timestamp": "2024-03-14T10:37:30Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_10",
+    "content": "Not much, just working on some designs for a client.",
+    "timestamp": "2024-03-14T10:40:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_11",
+    "content": "Sounds productive!",
+    "timestamp": "2024-03-14T10:41:00Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_12",
+    "content": "Yeah, trying to get it done before the weekend.",
+    "timestamp": "2024-03-14T10:42:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_13",
+    "content": "Do you have any plans for the weekend?",
+    "timestamp": "2024-03-14T10:43:30Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_14",
+    "content": "Not yet. Maybe just relax or go for a hike.",
+    "timestamp": "2024-03-14T10:45:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen",
+    "replyTo": "msg_13",
+    "replyToContent": "Do you have any plans for the weekend?"
+  },
+  {
+    "id": "msg_15",
+    "content": "A hike sounds nice. Want company?",
+    "timestamp": "2024-03-14T10:46:00Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_16",
+    "content": "Sure! Let's plan something.",
+    "timestamp": "2024-03-14T10:47:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen",
+    "replyTo": "msg_15",
+    "replyToContent": "A hike sounds nice. Want company?"
+  },
+  {
+    "id": "msg_17",
+    "content": "Awesome, I'll text you later with some ideas!",
+    "timestamp": "2024-03-14T10:48:00Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_18",
+    "content": "Looking forward to it!",
+    "timestamp": "2024-03-14T10:49:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_19",
+    "content": "Hey bro! I just wanted to let you know I got my pilot license today and I was declared flight-ready by the board. My first commercial flight will be next week from Estonia to Turkey!! It feels great! It has been my dream since I was a child. To be honest, it was the hardest thing I have ever done in my life",
+    "timestamp": "2024-03-14T10:50:00Z",
+    "senderId": "user_1",
+    "senderName": "John Doe",
+    "type": "text",
+    "status": "seen"
+  },
+  {
+    "id": "msg_20",
+    "content": "Congrats, dude! 🎉 That's insane! How did it feel getting your wings? Was the training crazy hard or did you kinda nail it? That's awesome that you stuck with it! 4 years is a long time to put your life on hold for something. What made you decide to pursue this so fiercely? Was there a particular moment or experience that sparked your passion?",
+    "timestamp": "2024-03-14T10:51:00Z",
+    "senderId": "user_2",
+    "senderName": "Jane Smith",
+    "type": "text",
+    "status": "seen"
+  }
+]

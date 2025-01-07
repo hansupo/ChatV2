@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Chat App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" />
+  <link rel="icon" type="image/png" href="/media/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/media/favicon.svg" />
+  <link rel="shortcut icon" href="/media/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/media/apple-touch-icon.png" />
+  <link rel="manifest" href="/media/site.webmanifest" />
+  <link rel="stylesheet" href="clean.css" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Chat App">
+  <meta name="theme-color" content="transparent">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-touch-fullscreen" content="yes">
+
+  <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.js" type="module"></script>
+</head>
+
+<body>
+  <div class="chat-container">
+    <div class="header">
+      <div class="header-content">
+        <button class="menu-button"></button>
+        <span class="title"></span>
+        <div class="background-controls">
+          <button class="background-button"></button>
+          <select id="background-select" class="background-select" hidden>
+            <!-- Options will be populated by JavaScript -->
+          </select>
+          <button class="reload-button" onclick="window.location.reload();"></button>
+        </div>
+      </div>
+    </div>
+    <div class="messages-container">
+      <div class="messages-content">
+        <!-- Messages will be populated by JavaScript -->
+        <div class="input-container">
+
+          
+          <div class="textarea-wrapper">
+            <button class="add-button"></button>
+            <input type="file" id="file-input" class="file-input" accept="image/*" hidden>
+            <textarea 
+              id="chat-input"
+              class="chat-input" 
+              placeholder="Type a message..." 
+              rows="1" 
+              enterkeyhint="send" 
+              inputmode="text"
+              style="accent-color: #000;"
+            ></textarea>
+            
+            <button hidden class="emoji-button"></button>
+            <button class="send-button"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful');
+          })
+          .catch(err => {
+            console.log('ServiceWorker registration failed: ', err);
+          });
+      });
+    }
+  </script>
+
+  <script src="index.js" type="module"></script>
+</body>
+
+</html>
