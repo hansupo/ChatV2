@@ -29,11 +29,7 @@
         <button class="menu-button"></button>
         <span class="title"></span>
         <div class="background-controls">
-          <button class="background-button"></button>
-          <select id="background-select" class="background-select" hidden>
-            <!-- Options will be populated by JavaScript -->
-          </select>
-          <button class="reload-button" onclick="window.location.reload();"></button>
+          <button class="right-menu-button"></button>
         </div>
       </div>
     </div>
@@ -79,6 +75,50 @@
   </script>
 
   <script src="index.js" type="module"></script>
+
+  <div class="right-menu">
+    <div class="right-menu-content">
+      <button class="close-menu-button"></button>
+      <div class="menu-items">
+        <button class="menu-item">
+          <span class="menu-item-text">Dark Mode</span>
+          <div class="menu-item-icon dark-mode-toggle">🌙</div>
+        </button>
+        <div class="menu-item-expandable">
+          <button class="menu-item">
+            <span class="menu-item-text">Change Background</span>
+            <div class="menu-item-icon background-button"></div>
+          </button>
+          <div class="background-grid">
+            <!-- Will be populated with background options -->
+            <div class="background-option" data-bg="none">
+              <div class="background-preview no-bg"></div>
+              <span>No Background</span>
+            </div>
+          </div>
+          <div class="gradient-controls">
+            <div class="color-picker-section">
+              <span class="section-title">Gradient Color</span>
+              <input type="color" id="gradient-color" class="gradient-color-picker">
+            </div>
+            <div class="opacity-section">
+              <span class="section-title">Gradient Opacity</span>
+              <input type="range" id="gradient-opacity" class="gradient-opacity-slider" 
+                     min="0" max="100" value="100" step="1">
+              <span class="opacity-value">100%</span>
+            </div>
+          </div>
+        </div>
+        <button class="menu-item">
+          <span class="menu-item-text">Reload App</span>
+          <div class="menu-item-icon reload-button"></div>
+        </button>
+      </div>
+      <select id="background-select" class="background-select" hidden>
+        <!-- Options will be populated by JavaScript -->
+      </select>
+    </div>
+  </div>
 </body>
 
 </html>

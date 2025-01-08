@@ -13,7 +13,7 @@ import { initializeViewportHandlers } from './viewport-handlers.js';
 import { handleAddButtonClick } from './input-handlers.js';
 import { addButton } from './types.js';
 import { initializeEmojiButton } from './emoji-handler.js';
-import { initializeBackground, cycleBackground } from './ui-utils.js';
+import { initializeMenu } from './menu-handlers.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   window.blurOverlay = createBlurOverlay();
@@ -21,8 +21,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeViewportHandlers();
   addButton.addEventListener('click', handleAddButtonClick);
   initializeEmojiButton();
-  initializeBackground();
-  
-  // Make cycleBackground available globally
-  window.cycleBackground = cycleBackground;
+  initializeMenu();
 }); 

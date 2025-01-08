@@ -96,121 +96,76 @@ export function formatTimestamp(isoString) {
   }
 }
 
-let backgrounds = [];
-let currentBgIndex = 0;
+let isDarkMode = localStorage.getItem('darkMode') === 'true';
+let currentBackground = localStorage.getItem('currentBackground') || 'none';
+let gradientColor = localStorage.getItem('gradientColor') || (isDarkMode ? '#000000' : '#ffffff');
+let gradientOpacity = parseFloat(localStorage.getItem('gradientOpacity') || '1');
 
-export async function initializeBackground() {
-  try {
-    // Fetch available backgrounds from server
-    const response = await fetch('/api/backgrounds');
-    backgrounds = await response.json();
-    
-    // Get DOM elements
-    const select = document.getElementById('background-select');
-    const bgButton = document.querySelector('.background-button');
-    
-    // Detect platform
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    
-    // Populate dropdown
-    backgrounds.forEach((bg, index) => {
-      const option = document.createElement('option');
-      option.value = index;
-      option.textContent = bg.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-      select.appendChild(option);
-    });
-    
-    // Load saved index or default to 0
-    const savedIndex = localStorage.getItem('currentBgIndex');
-    if (savedIndex !== null) {
-      currentBgIndex = parseInt(savedIndex);
-      if (currentBgIndex >= backgrounds.length) {
-        currentBgIndex = 0;
-      }
-    }
-    
-    // Set initial background and dropdown value
-    if (backgrounds.length > 0) {
-      select.value = currentBgIndex;
-      setBackground(backgrounds[currentBgIndex]);
-    }
-    
-    // Add click event listener to button
-    bgButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      
-      if (isAndroid) {
-        // For Android, show the select element and let the native UI handle it
-        select.hidden = false;
-        select.focus();
-      } else {
-        // For iOS and desktop, trigger the dropdown directly
-        select.hidden = false;
-        select.focus();
-        select.click();
-      }
-    });
-    
-    // Hide select when an option is chosen
-    select.addEventListener('change', (e) => {
-      currentBgIndex = parseInt(e.target.value);
-      setBackground(backgrounds[currentBgIndex]);
-      localStorage.setItem('currentBgIndex', currentBgIndex.toString());
-      select.hidden = true;
-    });
-    
-    // Hide select when clicking outside
-    document.addEventListener('click', (e) => {
-      if (e.target !== bgButton && e.target !== select) {
-        select.hidden = true;
-      }
-    });
-    
-    // Prevent select from closing when clicking inside it
-    select.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-    
-  } catch (error) {
-    console.error('Failed to load backgrounds:', error);
-  }
+function getRGBFromHex(hex) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `${r}, ${g}, ${b}`;
 }
 
-export function cycleBackground() {
-  if (backgrounds.length === 0) return;
-  
-  currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
-  const select = document.getElementById('background-select');
-  select.value = currentBgIndex;
-  setBackground(backgrounds[currentBgIndex]);
-  localStorage.setItem('currentBgIndex', currentBgIndex.toString());
+function getGradients(isDark) {
+    // Always use the selected gradient color, regardless of dark/light mode
+    const color = getRGBFromHex(gradientColor);
+    
+    const topGradient = `linear-gradient(
+        to top,
+        rgba(${color}, 0) 0%,
+        rgba(${color}, ${gradientOpacity * 0.1}) 25%,
+        rgba(${color}, ${gradientOpacity}) 88%,
+        rgba(${color}, ${gradientOpacity}) 100%
+    )`;
+
+    const bottomGradient = `linear-gradient(
+        to bottom,
+        rgba(${color}, 0) 0%,
+        rgba(${color}, ${gradientOpacity * 0.1}) 25%,
+        rgba(${color}, ${gradientOpacity}) 88%,
+        rgba(${color}, ${gradientOpacity}) 100%
+    )`;
+    
+    return { topGradient, bottomGradient };
 }
 
-// Helper function to try both PNG and JPG
-function setBackground(bgName) {
-  const topGradient = `linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.1) 25%,
-    rgba(0, 0, 0, 0.75) 88%,
-    rgba(0, 0, 0, 0.75) 100%
-  )`;
+export function setGradientColor(color) {
+    gradientColor = color;
+    setBackground(currentBackground);
+}
 
-  const bottomGradient = `linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.1) 25%,
-    rgba(0, 0, 0, 0.75) 88%,
-    rgba(0, 0, 0, 0.75) 100%
-  )`;
+export function setBackground(bgName) {
+    const { topGradient, bottomGradient } = getGradients(isDarkMode);
+    currentBackground = bgName;
+    localStorage.setItem('currentBackground', bgName);
 
-  const img = new Image();
-  img.onload = () => {
-    document.body.style.backgroundImage = `${topGradient}, ${bottomGradient}, url('/media/backgrounds/${bgName}.png')`;
-  };
-  img.onerror = () => {
-    document.body.style.backgroundImage = `${topGradient}, ${bottomGradient}, url('/media/backgrounds/${bgName}.jpg')`;
-  };
-  img.src = `/media/backgrounds/${bgName}.png`;
+    if (!bgName || bgName === 'none') {
+        const backgroundColor = isDarkMode ? 'rgb(0, 0, 0)' : 'rgb(255, 255, 255)';
+        document.body.style.backgroundColor = backgroundColor;
+        document.body.style.backgroundImage = `${topGradient}, ${bottomGradient}`;
+        return;
+    }
+
+    const img = new Image();
+    img.onload = () => {
+        document.body.style.backgroundImage = `${topGradient}, ${bottomGradient}, url('/media/backgrounds/${bgName}.png')`;
+    };
+    img.onerror = () => {
+        document.body.style.backgroundImage = `${topGradient}, ${bottomGradient}, url('/media/backgrounds/${bgName}.jpg')`;
+    };
+    img.src = `/media/backgrounds/${bgName}.png`;
+}
+
+export function toggleDarkMode() {
+    isDarkMode = !isDarkMode;
+    localStorage.setItem('darkMode', isDarkMode);
+    setBackground(currentBackground);
+    document.body.classList.toggle('dark-mode');
+}
+
+export function setGradientOpacity(opacity) {
+    gradientOpacity = opacity;
+    setBackground(currentBackground);
 }

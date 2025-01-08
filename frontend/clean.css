@@ -30,8 +30,9 @@
     --icon-send: url('data:image/svg+xml,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.99811 10.2467L7.43298 11.0077C7.70983 11.4922 7.84825 11.7344 7.84825 12C7.84825 12.2656 7.70983 12.5078 7.43299 12.9923L7.43298 12.9923L6.99811 13.7533C5.75981 15.9203 5.14066 17.0039 5.62348 17.5412C6.1063 18.0785 7.24961 17.5783 9.53623 16.5779L15.8119 13.8323C17.6074 13.0468 18.5051 12.654 18.5051 12C18.5051 11.346 17.6074 10.9532 15.8119 10.1677L9.53624 7.4221C7.24962 6.42171 6.1063 5.92151 5.62348 6.45883C5.14066 6.99615 5.75981 8.07966 6.99811 10.2467Z" fill="%23222222"/></svg>');
     --icon-cancel: url('data:image/svg+xml,<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z" fill="%23000000"/></svg>');
     --icon-menu: url('data:image/svg+xml,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 17H13M5 12H19M11 7H19" stroke="%23000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-
-  }
+    --icon-menu-vertical: url('/media/icons/menu-vertical-svgrepo-com.svg');
+    --icon-chevron-left: url('data:image/svg+xml,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="%23000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+}
 
 /* ==========================================================================
    2. Base Styles
@@ -120,9 +121,9 @@ body {
     justify-content: space-between;
     flex-shrink: 0;
     font-size: 1em;
-    background-color: rgba(131, 131, 131, 0);
+    background-color: rgba(255, 255, 255, 0);
     color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(50px);
+    backdrop-filter: blur(10px);
     padding: 0.5em 0.5em;
     position: fixed;
     left: 0;
@@ -174,13 +175,13 @@ body {
 }
 
 .message.incoming {
-    background-color: rgba(241, 241, 241, 0.5);
+    background-color: rgba(240, 240, 240, 0.75);
     backdrop-filter: blur(10px);
     color: var(--color-black);
 }
 
 .message.outgoing {
-    background-color: rgba(43, 43, 43, 0.5);
+    background-color: rgba(92, 92, 92, 0.75);
     backdrop-filter: blur(10px);
 
     color: var(--color-white);
@@ -198,7 +199,7 @@ body {
     margin-top: 1em;
     margin-bottom: 0.5em;
     font-size: 0.85em;
-    color: #cfcfcf;
+    color: rgb(131, 131, 131);
     margin-left: 0.5em;
 }
 
@@ -234,10 +235,11 @@ body {
     width: auto;
     display: inline-block;
     z-index: 1;
-    background-color: rgba(165, 165, 165, 0.8);
-    backdrop-filter: blur(50px);
-    color: rgb(59, 59, 59);
+    background-color: rgba(255, 255, 255, 0);
+    backdrop-filter: blur(10px);
+    color: rgb(131, 131, 131);
     font-size: 0.8em;
+    border: 1px solid rgba(126, 126, 126, 0.1);
 }
 
 /* Add styles for the preview content */
@@ -249,7 +251,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     max-height: 5.6em; /* Approximately 4 lines (1.4 line-height × 4) */
-    line-height: 1;
+    line-height: 1.2;
     padding-top: 0.25em;
     width: auto;
 }
@@ -373,8 +375,8 @@ body {
     bottom: 0;
     padding: 0.5em;
 
-    backdrop-filter: blur(50px);
-    -webkit-backdrop-filter: blur(50px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -745,7 +747,7 @@ body {
   will-change: transform;
   z-index: 1102;
   width: 100%;
-  margin-top: -4px;
+  margin-top: -0px;
 }
 
 .floating-message {
@@ -767,7 +769,7 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  width: 75vw;
+  width: 70vw;
   /* Inherit existing message-tools styles */
   flex-direction: column;
   border-radius: 1em;
@@ -782,7 +784,8 @@ body {
 
 .message-group.incoming + .message-tools-floating {
   align-self: start;
-  margin-left: 2em;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 .message-group + .message-group[data-sender] {
@@ -844,7 +847,6 @@ body {
 .background-controls {
   display: flex;
   align-items: center;
-  gap: 0.5em;
   position: relative;
 }
 
@@ -899,3 +901,404 @@ body {
   object-fit: cover;
 }
 
+.dark-mode-toggle {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.dark-mode-toggle:hover {
+    opacity: 1;
+}
+
+/* Dark mode specific styles */
+.dark-mode {
+    color: #fff;
+}
+
+/* .dark-mode .header-content {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .input-container {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+} */
+.dark-mode .chat-input {
+    color: #fff;
+    background-color: rgba(58, 58, 58, 0.5);
+}
+
+.dark-mode .message.incoming {
+    background-color: rgba(49, 49, 49, 0.6);
+    color: #fff;
+}
+
+.dark-mode .message.outgoing {
+  background-color: rgba(129, 129, 129, 0.6);
+  color: #fff;
+}
+
+.dark-mode .reply-preview {
+  background-color: rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0.747);
+  border: 1px solid rgba(49, 49, 49, 0.6);
+}
+
+.dark-mode .blur-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .message-tools-floating {
+  background-color: rgba(59, 59, 59, 0.5);
+}
+
+.dark-mode .reaction-bar-floating {
+  background-color: rgba(59, 59, 59, 0.5);
+}
+
+/* Add these new styles for the right menu */
+.right-menu-button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: rgba(128, 128, 128, 0.8);
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-mask-image: var(--icon-menu-vertical);
+    mask-image: var(--icon-menu-vertical);
+    -webkit-mask-size: 80%;
+    mask-size: 80%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+.right-menu-button:hover {
+    transform: scale(1.1);
+}
+
+.dark-mode .right-menu-button {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.right-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: right 0.3s ease;
+    z-index: 2001;
+}
+
+.right-menu.active {
+    right: 0;
+}
+
+.right-menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+    height: 100%;
+    overflow-y: auto;
+    padding-top: calc(env(safe-area-inset-top) + 1em);
+    position: relative;
+}
+
+.right-menu-content button {
+    width: 100%;
+    padding: 1em;
+    border: none;
+    background-color: rgba(128, 128, 128, 0.1);
+    border-radius: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    min-height: 3.5em;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Add this to ensure SVGs stay within buttons */
+.right-menu-content button svg,
+.right-menu-content button img {
+    width: 1.5em;
+    height: 1.5em;
+    object-fit: contain;
+}
+
+/* Dark mode support */
+.dark-mode .right-menu {
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+}
+
+.dark-mode .right-menu-content button {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.close-menu-button {
+    position:static;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    -webkit-mask-image: var(--icon-chevron-left);
+    mask-image: var(--icon-chevron-left);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: rgb(71, 71, 71);
+    z-index: 1;
+}
+
+.menu-items {
+    margin-top: 0em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
+    border: none;
+    background-color: rgba(128, 128, 128, 0.1);
+    border-radius: 0.8em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.menu-item-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.menu-item-text {
+    font-size: 1em;
+    color: var(--color-black);
+}
+
+/* Dark mode adjustments */
+.dark-mode .menu-item-text {
+    color: var(--color-white);
+}
+
+/* Adjust the dark mode toggle to match other icons */
+.dark-mode-toggle {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.color-picker-section {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  width: 100%;
+}
+
+.section-title {
+  font-size: 0.9em;
+  color: var(--color-grey);
+}
+
+.gradient-color-picker {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.dark-mode .section-title {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.background-grid,
+.gradient-controls {
+    display: none;
+}
+
+.background-grid.expanded {
+    display: flex;
+    overflow-x: auto;
+    padding: 1em 0;
+    gap: 1em;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* Show gradient controls when background grid is expanded */
+.menu-item-expandable.expanded .gradient-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 0.5em 1em;
+    margin-top: 0.5em;
+}
+
+.color-picker-section,
+.opacity-section {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.section-title {
+    font-size: 0.9em;
+    color: var(--color-grey);
+}
+
+.gradient-color-picker {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.dark-mode .section-title {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Make sure the menu button is visible */
+.right-menu-button {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: grey;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-mask-image: var(--icon-menu-vertical);
+    mask-image: var(--icon-menu-vertical);
+    -webkit-mask-size: 80%;
+    mask-size: 80%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+}
+
+.background-preview {
+    width: 140px;
+    height: 200px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 0.5em;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.background-preview.selected {
+    border-color: var(--color-primary);
+}
+
+.background-preview.no-bg {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.background-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.background-option span {
+    font-size: 0.8em;
+    color: var(--color-grey);
+    text-align: center;
+}
+
+.gradient-controls {
+    display: none;
+    flex-direction: column;
+    gap: 1em;
+    padding: 0.5em 1em;
+    margin-top: 0.5em;
+}
+
+.background-grid.expanded + .gradient-controls {
+    display: flex;
+}
+
+.opacity-section {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+
+.gradient-opacity-slider {
+    flex: 1;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--color-grey);
+    border-radius: 2px;
+    outline: none;
+}
+
+.gradient-opacity-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: none;
+}
+
+.gradient-opacity-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    border: none;
+}
+
+.opacity-value {
+    min-width: 3em;
+    font-size: 0.9em;
+    color: var(--color-grey);
+}
+
+.dark-mode .opacity-value {
+    color: rgba(255, 255, 255, 0.7);
+}
