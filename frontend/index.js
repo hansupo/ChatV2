@@ -14,6 +14,7 @@ import { handleAddButtonClick } from './input-handlers.js';
 import { addButton } from './types.js';
 import { initializeEmojiButton } from './emoji-handler.js';
 import { initializeMenu } from './menu-handlers.js';
+import { initializeImageViewer } from './image-viewer.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   window.blurOverlay = createBlurOverlay();
@@ -22,4 +23,5 @@ document.addEventListener('DOMContentLoaded', () => {
   addButton.addEventListener('click', handleAddButtonClick);
   initializeEmojiButton();
   initializeMenu();
+  initializeImageViewer();
 }); 

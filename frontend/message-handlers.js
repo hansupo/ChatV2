@@ -59,14 +59,7 @@ export function createMessageElement(message, isOwn = false) {
   }
   
   // Create message content
-  const messageContent = document.createElement('div');
-  messageContent.className = 'message-content';
-  
-  if (isEmojiOnly(message.content)) {
-    messageContent.textContent = message.content;
-  } else {
-    messageContent.textContent = optimizeTextWrapping(message.content, 1);
-  }
+  const messageContent = createMessageContent(message);
   
   messageElement.appendChild(messageContent);
   messageGroup.appendChild(messageElement);
@@ -522,4 +515,34 @@ export function updateMessageGrouping() {
       profilePic.style.display = !isNextConsecutive ? '' : 'none';
     }
   });
+}
+
+function createMessageContent(message) {
+  const messageContent = document.createElement('div');
+  messageContent.className = 'message-content';
+  
+  if (message.type === 'image') {
+    const img = document.createElement('img');
+    img.src = message.content;
+    img.className = 'message-image';
+    img.alt = 'Sent image';
+    
+    // Add loading state
+    img.style.opacity = '0.5';
+    img.onload = () => {
+      img.style.opacity = '1';
+      // Scroll to bottom after image loads
+      window.scrollToBottom();
+    };
+    
+    messageContent.appendChild(img);
+  } else {
+    if (isEmojiOnly(message.content)) {
+      messageContent.textContent = message.content;
+    } else {
+      messageContent.textContent = optimizeTextWrapping(message.content, 1);
+    }
+  }
+  
+  return messageContent;
 }

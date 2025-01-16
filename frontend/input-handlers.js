@@ -1,5 +1,6 @@
 import { messages, chatInput, fileInput, sendButton, messagesContainer } from './types.js';
 import { createMessageElement, clearActiveReply } from './message-handlers.js';
+import { sendMessage } from './chat-core.js';
 
 // Add window resize handler
 let resizeTimeout;
@@ -31,11 +32,31 @@ export function handleAddButtonClick(e) {
 }
 
 // Add file input handler
-fileInput.addEventListener('change', (e) => {
+fileInput.addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (file) {
     fileInput.value = '';
-    // TODO: Handle file upload
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) throw new Error('Upload failed');
+      
+      const { imageUrl } = await response.json();
+      
+      // Use the existing sendMessage function with type: 'image'
+      sendMessage(imageUrl, 'image');
+      
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      // TODO: Show error message to user
+    }
   }
 });
 

@@ -33,25 +33,25 @@ async function initializeChat() {
 function connectWebSocket() {
   // Use wss:// when the page is served over https://
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  ws = new WebSocket(`${protocol}//${window.location.host}`);
+  window.ws = new WebSocket(`${protocol}//${window.location.host}`);
   
-  ws.onopen = () => {
+  window.ws.onopen = () => {
     console.log('WebSocket connected');
     reconnectAttempts = 0;
   };
 
-  ws.onclose = async () => {
+  window.ws.onclose = async () => {
     console.log('WebSocket closed');
     if (document.visibilityState === 'visible') {
       await attemptReconnect();
     }
   };
 
-  ws.onerror = (error) => {
+  window.ws.onerror = (error) => {
     console.error('WebSocket error:', error);
   };
   
-  ws.onmessage = (event) => {
+  window.ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
     console.log('Received message:', data);
     
@@ -143,9 +143,9 @@ function setupInputHandlers() {
   });
 }
 
-function sendMessage(content) {
+function sendMessage(content, type = 'text') {
   // Create and display message immediately
-  const newMessage = createNewMessage(content);
+  const newMessage = createNewMessage(content, type);
   const messageElement = createMessageElement(newMessage, true);
   
   // Get reference to input container
@@ -168,7 +168,7 @@ function sendMessage(content) {
       content: content,
       senderId: window.currentUser.id,
       senderName: window.currentUser.username,
-      type: 'text',
+      type: type,
       status: 'sent',
       reactions: {},
       replyTo: window.activeReplyTo ? window.activeReplyTo.id : null,
@@ -176,7 +176,7 @@ function sendMessage(content) {
     }
   };
   
-  ws.send(JSON.stringify(messageData));
+  window.ws.send(JSON.stringify(messageData));
   
   // Clear the active reply after sending
   if (window.activeReplyTo) {
@@ -269,14 +269,14 @@ window.scrollToBottom = function() {
   }
 }
 
-function createNewMessage(content) {
+function createNewMessage(content, type = 'text') {
   return {
     id: `msg_${Date.now()}`,
     content: content,
     timestamp: new Date().toISOString(),
     senderId: window.currentUser.id,
     senderName: window.currentUser.username,
-    type: 'text',
+    type: type,
     status: 'sent',
     reactions: {},
     replyTo: window.activeReplyTo ? window.activeReplyTo.id : null,
