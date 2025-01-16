@@ -19,8 +19,57 @@ async function initializeChat() {
   // Initialize WebSocket connection
   connectWebSocket();
   
-  // Add visibility change handler
-  document.addEventListener('visibilitychange', handleVisibilityChange);
+  // Track page visibility and handle badges
+  document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible') {
+      // Clear badge when app becomes visible
+      if ('clearAppBadge' in navigator) {
+        try {
+          await navigator.clearAppBadge();
+          console.log('Badge cleared on visibility change');
+        } catch (error) {
+          console.error('Error clearing badge:', error);
+        }
+      }
+    }
+
+    if (window.ws && window.ws.readyState === WebSocket.OPEN) {
+      window.ws.send(JSON.stringify({
+        type: 'visibility',
+        state: document.visibilityState,
+        userId: window.currentUser.id
+      }));
+    }
+  });
+
+  // Clear badge on startup
+  if ('clearAppBadge' in navigator) {
+    try {
+      await navigator.clearAppBadge();
+      console.log('Badge cleared on startup');
+    } catch (error) {
+      console.error('Error clearing badge:', error);
+    }
+  }
+
+  // Track window focus
+  window.addEventListener('focus', () => {
+    if (window.ws && window.ws.readyState === WebSocket.OPEN) {
+      window.ws.send(JSON.stringify({
+        type: 'visibility',
+        state: 'visible'
+      }));
+    }
+  });
+
+  window.addEventListener('blur', () => {
+    if (window.ws && window.ws.readyState === WebSocket.OPEN) {
+      window.ws.send(JSON.stringify({
+        type: 'visibility',
+        state: 'hidden'
+      }));
+    }
+  });
   
   // Get or create user
   const user = await getOrCreateUser();
@@ -38,6 +87,20 @@ function connectWebSocket() {
   window.ws.onopen = () => {
     console.log('WebSocket connected');
     reconnectAttempts = 0;
+    
+    // Send user identification immediately after connection
+    window.ws.send(JSON.stringify({
+      type: 'identify',
+      userId: window.currentUser.id,
+      username: window.currentUser.username
+    }));
+    
+    // Send initial visibility state
+    window.ws.send(JSON.stringify({
+      type: 'visibility',
+      state: document.visibilityState,
+      userId: window.currentUser.id
+    }));
   };
 
   window.ws.onclose = async () => {

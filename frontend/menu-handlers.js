@@ -5,6 +5,18 @@ export function initializeMenu() {
     const closeButton = document.querySelector('.close-menu-button');
     const menu = document.querySelector('.right-menu');
     
+    // Add notification permission button
+    const notificationButton = document.createElement('button');
+    notificationButton.className = 'menu-item';
+    notificationButton.innerHTML = `
+        <span class="menu-item-text">Notifications</span>
+        <div class="menu-item-icon notification-toggle">🔔</div>
+    `;
+
+    // Insert after dark mode button
+    const darkModeButton1 = menu.querySelector('.menu-item:has(.dark-mode-toggle)');
+    darkModeButton1.parentNode.insertBefore(notificationButton, darkModeButton1.nextSibling);
+
     function closeMenu() {
         menu.classList.remove('active');
         document.body.style.overflow = '';
@@ -166,4 +178,87 @@ export function initializeMenu() {
         localStorage.setItem('gradientOpacity', opacity.toString());
         setGradientOpacity(opacity);
     });
+    
+    // Handle notification permission
+    notificationButton.addEventListener('click', async () => {
+        try {
+            if (!('Notification' in window)) {
+                console.log('Notifications not supported');
+                return;
+            }
+
+            // Check if service worker is available
+            if (!('serviceWorker' in navigator)) {
+                console.log('Service Worker not supported');
+                return;
+            }
+
+            // Log current permission state
+            console.log('Current notification permission:', Notification.permission);
+
+            if (Notification.permission === 'granted') {
+                // Unsubscribe logic
+                const registration = await navigator.serviceWorker.ready;
+                const subscription = await registration.pushManager.getSubscription();
+                if (subscription) {
+                    await subscription.unsubscribe();
+                    localStorage.setItem('notificationsEnabled', 'false');
+                    notificationButton.querySelector('.notification-toggle').innerHTML = '🔕';
+                }
+            } else {
+                // First request notification permission
+                const permission = await Notification.requestPermission();
+                console.log('Permission request result:', permission);
+
+                if (permission === 'granted') {
+                    // Get service worker registration
+                    const registration = await navigator.serviceWorker.ready;
+                    console.log('Service Worker ready');
+
+                    // Get VAPID key
+                    const response = await fetch('/api/vapid-public-key');
+                    const { publicKey } = await response.json();
+                    console.log('Got VAPID public key');
+
+                    // Subscribe to push notifications
+                    try {
+                        const subscription = await registration.pushManager.subscribe({
+                            userVisibleOnly: true,
+                            applicationServerKey: publicKey
+                        });
+                        console.log('Push subscription successful:', subscription);
+
+                        // Send subscription to server
+                        const subscribeResponse = await fetch('/api/subscribe', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                subscription,
+                                userId: window.currentUser.id
+                            })
+                        });
+
+                        if (subscribeResponse.ok) {
+                            localStorage.setItem('notificationsEnabled', 'true');
+                            notificationButton.querySelector('.notification-toggle').innerHTML = '🔔';
+                            console.log('Subscription saved on server');
+                        } else {
+                            console.error('Failed to save subscription on server');
+                        }
+                    } catch (error) {
+                        console.error('Push subscription failed:', error);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error handling notifications:', error);
+        }
+    });
+
+    // Initialize notification toggle state
+    if (localStorage.getItem('notificationsEnabled') === 'true') {
+        notificationButton.querySelector('.notification-toggle').innerHTML = '🔔';
+    } else {
+        notificationButton.querySelector('.notification-toggle').innerHTML = '🔕';
+    }
 } 

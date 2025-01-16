@@ -224,7 +224,6 @@ body {
 
 .floating-message {
   position: fixed;
-  pointer-events: none;
   z-index: 2110;
 }
 
@@ -744,7 +743,7 @@ body {
 }
 
 .long-press-container {
-  pointer-events: auto;
+  pointer-events: none;
   will-change: transform;
   z-index: 1102;
   width: 100%;
@@ -752,7 +751,7 @@ body {
 }
 
 .floating-message {
-  pointer-events: none;
+
   width: fit-content;
   align-self: flex-start;
 
@@ -765,6 +764,7 @@ body {
 
 
 .message-tools-floating {
+  pointer-events: auto;
   position: absolute;
   top: 100%;
   display: flex;
@@ -775,6 +775,7 @@ body {
   flex-direction: column;
   border-radius: 1em;
   background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2103;
 }
 
 /* Position tools based on message alignment */

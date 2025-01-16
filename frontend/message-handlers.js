@@ -100,12 +100,18 @@ export function handlePressStart(e) {
         minHeight: `${messageRect.height}px`,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center' // Keep center alignment for reaction bar
+        alignItems: 'center'
       });
       
       // Create floating message (exact clone of original)
       const floatingMessage = messageGroup.cloneNode(true);
       floatingMessage.classList.add('floating-message');
+      
+      // Add click handler to floating message
+      floatingMessage.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent event from bubbling to overlay
+        clearLongPress();
+      });
       
       // Create reaction bar
       const reactionBar = createReactionBar(message);
