@@ -8,18 +8,18 @@ let longPressTimer;
 const DEFAULT_REACTIONS = ['👍', '❤️', '😆', '😮', '😢', '😠'];
 const CONSECUTIVE_BORDER_RADIUS = '0.4em';
 
-export function createMessageElement(message, isOwn = false) {
+export function createMessageElement(message, isOutgoing) {
   const messageGroup = document.createElement('div');
-  messageGroup.className = `message-group ${isOwn ? 'outgoing' : 'incoming'}`;
+  messageGroup.className = `message-group ${isOutgoing ? 'outgoing' : 'incoming'}`;
   messageGroup.dataset.sender = message.senderId;
   messageGroup.dataset.timestamp = message.timestamp;
   messageGroup.style.display = 'flex';
   messageGroup.style.flexDirection = 'column';
-  messageGroup.style.alignSelf = isOwn ? 'flex-end' : 'flex-start';
+  messageGroup.style.alignSelf = isOutgoing ? 'flex-end' : 'flex-start';
   messageGroup.style.maxWidth = '70%';
   
   // We'll handle sender info differently for incoming messages
-  if (!isOwn && message.senderName) {
+  if (!isOutgoing && message.senderName) {
     // Create sender name container
     const senderName = document.createElement('div');
     senderName.className = 'sender-name';
@@ -41,8 +41,13 @@ export function createMessageElement(message, isOwn = false) {
   }
   
   const messageElement = document.createElement('div');
-  messageElement.className = `message ${isOwn ? 'outgoing' : 'incoming'}`;
+  messageElement.className = `message ${isOutgoing ? 'outgoing' : 'incoming'}`;
   messageElement.dataset.messageId = message.id;
+  
+  // Add emoji-only class if applicable
+  if (message.type === 'text' && isEmojiOnly(message.content)) {
+    messageElement.classList.add('emoji-only');
+  }
   
   // Add reply preview if it exists
   if (message.replyTo) {
@@ -64,13 +69,15 @@ export function createMessageElement(message, isOwn = false) {
   messageElement.appendChild(messageContent);
   messageGroup.appendChild(messageElement);
   
+
+  
   // Add event listeners for long press
   messageElement.addEventListener('touchstart', handlePressStart);
   messageElement.addEventListener('touchend', handlePressEnd);
   messageElement.addEventListener('touchmove', handlePressCancel);
-  messageElement.addEventListener('mousedown', handlePressStart);
-  messageElement.addEventListener('mouseup', handlePressEnd);
-  messageElement.addEventListener('mouseleave', handlePressCancel);
+  // messageElement.addEventListener('mousedown', handlePressStart);
+  // messageElement.addEventListener('mouseup', handlePressEnd);
+  // messageElement.addEventListener('mouseleave', handlePressCancel);
   
   return messageGroup;
 }
@@ -161,8 +168,23 @@ export function handlePressEnd(e) {
   // Clear the long press timer
   clearTimeout(longPressTimer);
   
-  // If this was a short tap (not a long press), toggle timestamp
-  if (!document.querySelector('.floating-message')) {
+  // Get the touch/click coordinates
+  const touchEndX = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
+  const touchEndY = e.type === 'touchend' ? e.changedTouches[0].clientY : e.clientY;
+  
+  // Get the element's bounding rectangle
+  const rect = messageElement.getBoundingClientRect();
+  
+  // Check if the touch/click ended within the message element
+  const isWithinBounds = (
+    touchEndX >= rect.left &&
+    touchEndX <= rect.right &&
+    touchEndY >= rect.top &&
+    touchEndY <= rect.bottom
+  );
+  
+  // If this was a short tap (not a long press) and ended within bounds
+  if (!document.querySelector('.floating-message') && isWithinBounds) {
     const messageId = messageElement.dataset.messageId;
     const message = messages.find(m => m.id === messageId);
     
@@ -177,12 +199,12 @@ export function handlePressEnd(e) {
       timestamp.textContent = formatTimestamp(message.timestamp);
       messageElement.appendChild(timestamp);
       
-      // Auto-hide timestamp after 3 seconds
+      // Auto-hide timestamp after 15 seconds
       setTimeout(() => {
         if (timestamp && timestamp.parentNode) {
           timestamp.remove();
         }
-      }, 3000);
+      }, 15000);
     }
   }
 }
@@ -546,7 +568,23 @@ function createMessageContent(message) {
     if (isEmojiOnly(message.content)) {
       messageContent.textContent = message.content;
     } else {
-      messageContent.textContent = optimizeTextWrapping(message.content, 1);
+      // First optimize text wrapping
+      const wrappedContent = optimizeTextWrapping(message.content, 1);
+      
+      // Then convert URLs to clickable links
+      const linkedContent = wrappedContent.replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+      );
+      messageContent.innerHTML = linkedContent;
+      
+      // Add click handler for all links
+      const links = messageContent.querySelectorAll('a');
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent message interaction when clicking links
+        });
+      });
     }
   }
   

@@ -187,7 +187,9 @@ function setupInputHandlers() {
   const sendButton = document.querySelector('.send-button');
 
   chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    // Only handle Enter for desktop devices
+    if (e.key === 'Enter' && !e.shiftKey && 
+        !/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       e.preventDefault(); // Prevent new line
       const content = chatInput.value.trim();
       if (content) {

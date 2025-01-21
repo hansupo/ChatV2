@@ -14,9 +14,11 @@ window.addEventListener('resize', () => {
 // Add enter key handler
 chatInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
+    // Always allow new lines on mobile devices
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       return;
     }
+    // Only desktop should auto-send on Enter
     e.preventDefault();
     sendButton.click();
   }

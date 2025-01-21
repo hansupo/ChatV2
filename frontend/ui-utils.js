@@ -77,22 +77,22 @@ export function isEmojiOnly(text) {
   return isEmoji;
 }
 
-export function formatTimestamp(isoString) {
-  const date = new Date(isoString);
+export function formatTimestamp(timestamp) {
+  const date = new Date(timestamp);
   const now = new Date();
-  const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const isToday = date.toDateString() === now.toDateString();
   
-  // Check if the message is from today
-  if (date.toDateString() === now.toDateString()) {
-    return time;
+  // Format time (always shown)
+  const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+  const timeStr = date.toLocaleTimeString('en-US', timeOptions);
+  
+  if (isToday) {
+    return `Sent at ${timeStr}`;
   } else {
-    // For different days, include the date
-    // Format: "Jan 15, 12:34"
-    const dateStr = date.toLocaleDateString([], { 
-      month: 'short', 
-      day: 'numeric'
-    });
-    return `${dateStr}, ${time}`;
+    // Format date for non-today messages
+    const dateOptions = { day: 'numeric', month: 'short' };
+    const dateStr = date.toLocaleDateString('en-US', dateOptions);
+    return `Sent on ${dateStr}, ${timeStr}`;
   }
 }
 
